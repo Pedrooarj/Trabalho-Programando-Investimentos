@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+    <title>Comparação de Compra</title>
+</head>
+
+<body>
+    <label for="carPrice">Preço do Carro:</label>
+    <input type="number" id="carPrice" placeholder="Insira o preço do carro">
+
+    <button onclick="calcularComparacao()">Calcular</button>
+
+    <div id="result"></div>
+
+    <script>
+        function calcularComparacao() {
+            var carPrice = parseFloat(document.getElementById('carPrice').value);
+
+            if (isNaN(carPrice) || carPrice <= 0) {
+                alert('Insira um valor válido para o preço do carro.');
+                return;
+            }
+
+            var descontoAVista = carPrice * 0.1;
+            var precoAVista = carPrice - descontoAVista;
+
+            var financiamentoJurosNominais = 0.2; // 20%
+            var financiamentoParcelas = 24;
+            var jurosReais = 0.09; // 9%
+            var jurosFinanciamento = carPrice * financiamentoJurosNominais * (financiamentoParcelas / 12);
+            var precoFinanciado = carPrice + jurosFinanciamento;
+
+            var consorcioTaxaAdmin = 0.1; // 10%
+            var consorcioParcelas = 60;
+            var fundoComum = carPrice * (1.6667 / 100);
+            var taxaAdmin = carPrice * (consorcioTaxaAdmin / 100);
+            var valorParcelaConsorcio = (fundoComum + taxaAdmin) * consorcioParcelas;
+
+            var resultadoHTML = `
+                <h2>Resultados da Comparação:</h2>
+                <p>À Vista: R$ ${precoAVista.toFixed(2)}</p>
+                <p>Financiado: R$ ${precoFinanciado.toFixed(2)} (Juros: R$ ${jurosFinanciamento.toFixed(2)})</p>
+                <p>Consórcio: R$ ${valorParcelaConsorcio.toFixed(2)} (Sem considerar fundo de reserva)</p>
+            `;
+
+            document.getElementById('result').innerHTML = resultadoHTML;
+        }
+    </script>
+</body>
+
+</html>
