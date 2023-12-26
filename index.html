@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,7 +18,7 @@
         }
 
         input {
-            width: 100%;
+            width: 80%;
             padding: 8px;
             margin-bottom: 20px;
         }
@@ -33,6 +34,10 @@
         #result {
             margin-top: 20px;
         }
+
+        canvas {
+            margin-top: 30px;
+        }
     </style>
     <title>Comparação de Compra</title>
 </head>
@@ -45,6 +50,9 @@
 
     <div id="result"></div>
 
+    <canvas id="myChart" width="400" height="200"></canvas>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         function calcularComparacao() {
             var carPrice = parseFloat(document.getElementById('carPrice').value);
@@ -77,6 +85,37 @@
             `;
 
             document.getElementById('result').innerHTML = resultadoHTML;
+
+            // Configuração do gráfico
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['À Vista', 'Financiado', 'Consórcio'],
+                    datasets: [{
+                        label: 'Preço Final',
+                        data: [precoAVista, precoFinanciado, valorParcelaConsorcio],
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 206, 86, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
         }
     </script>
 </body>
