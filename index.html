@@ -6,118 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        input {
-            width: 80%;
-            padding: 8px;
-            margin-bottom: 20px;
-        }
-
-        button {
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        #result {
-            margin-top: 20px;
-        }
-
-        canvas {
-            margin-top: 30px;
-        }
-    </style>
-    <title>Comparação de Compra</title>
+    <link rel="stylesheet" href="style.css">
+    <title>Vehicles Shopping Comparison</title>
 </head>
 
 <body>
-    <label for="carPrice">Preço do Carro:</label>
-    <input type="number" id="carPrice" placeholder="Insira o preço do carro">
+    <label for="carPrice">Car Price:</label>
+    <input type="number" id="carPrice" placeholder="Insert the car's price">
 
-    <button onclick="calcularComparacao()">Calcular</button>
+    <button onclick="calcularComparacao()">Calculate</button>
 
     <div id="result"></div>
 
     <canvas id="myChart" width="400" height="200"></canvas>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        function calcularComparacao() {
-            var carPrice = parseFloat(document.getElementById('carPrice').value);
-
-            if (isNaN(carPrice) || carPrice <= 0) {
-                alert('Insira um valor válido para o preço do carro.');
-                return;
-            }
-
-            var descontoAVista = carPrice * 0.1;
-            var precoAVista = carPrice - descontoAVista;
-
-            var financiamentoJurosNominais = 0.2; // 20%
-            var financiamentoParcelas = 24;
-            var jurosReais = 0.09; // 9%
-            var jurosFinanciamento = carPrice * financiamentoJurosNominais * (financiamentoParcelas / 12);
-            var precoFinanciado = carPrice + jurosFinanciamento;
-
-            var consorcioTaxaAdmin = 0.1; // 10%
-            var consorcioParcelas = 60;
-            var fundoComum = carPrice * (1.6667 / 100);
-            var taxaAdmin = carPrice * (consorcioTaxaAdmin / 100);
-            var valorParcelaConsorcio = (fundoComum + taxaAdmin) * consorcioParcelas;
-
-            var resultadoHTML = `
-                <h2>Resultados da Comparação:</h2>
-                <p>À Vista: R$ ${precoAVista.toFixed(2)}</p>
-                <p>Financiado: R$ ${precoFinanciado.toFixed(2)} (Juros: R$ ${jurosFinanciamento.toFixed(2)})</p>
-                <p>Consórcio: R$ ${valorParcelaConsorcio.toFixed(2)} (Sem considerar fundo de reserva)</p>
-            `;
-
-            document.getElementById('result').innerHTML = resultadoHTML;
-
-            // Configuração do gráfico
-            var ctx = document.getElementById('myChart').getContext('2d');
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['À Vista', 'Financiado', 'Consórcio'],
-                    datasets: [{
-                        label: 'Preço Final',
-                        data: [precoAVista, precoFinanciado, valorParcelaConsorcio],
-                        backgroundColor: [
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                        ],
-                        borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(255, 206, 86, 1)',
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
-    </script>
+    <script src="index.js"></script>
 </body>
 
 </html>
